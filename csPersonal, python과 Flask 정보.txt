@@ -1,0 +1,53 @@
+1. 가을 웜톤 사진 구하기
+
+2. api와 플라스크로 코드 만들어 놓기
+
+
+먼저 파이썬으로 플라스크를 다운받고 실행시키려면 가상환경이 필요
+venv로 가상환경 만들어놨음 
+cd venv로 가서 
+cd Scripts로 가서 
+activate 하면 가상환경이 실행된다
+파일 돌아가기: cd..
+
+
+atal error in launcher: Unable to create process using '"C:\venvs\myproject\Scripts\python.exe"  "C:\venv\CSPersonal\Scripts\pip.exe" 
+install flask_restful': ??? ??? ?? ? ????.
+이런 오류 뜨면 
+모든 명령어 앞에 python -m 을 붙이고 입력하면 해결됨
+
+Usage: python -m flask run [OPTIONS]
+Try 'python -m flask run --help' for help.
+이렇게 뜨고 실행이 안되면
+
+set FLASK_APP=project.app     (project는 디렉토리, .app 실행시키는 는 py 파일 이름)
+이렇게 경로를 설정하고 다시 flask 실행하면 됨
+
+1.  다른 함수들을 담고있는 클래스의 함수는 일단 필요없음
+2. 사진데이터의 내용을 JSON 즉 객체로 담을 class가 존재해야함
+3. 그 클래스를 변수형으로 JSON데이터를 저장해서 가지고 있어야함
+4. app.route로 POST, get의 입력에 대응해서 값을 받아야함
+
+try-except
+except는 오류 발생 시 실행
+
+if __name__ == "__main__": 이란 __name__ 에 해당 파일의 이름이 들어가고 __main__을 대입해 프로그램의 시작점 main내용이다 라는 뜻임
+이 코드 밑으로 내용 작성 시 main해당 부분
+
+
+
+
+'''json 모듈:
+파이썬의 표준 라이브러리에 포함된 모듈로, JSON 데이터를 파이썬 객체로 변환하거나 파이썬 객체를 JSON 형식의 문자열로 변환하는 데 사용됩니다.
+json 모듈을 사용하면 JSON 데이터를 직접 다룰 수 있습니다. json.loads() 함수를 사용하여 JSON 문자열을 파이썬 객체로 로드하고, json.dumps() 함수를 사용하여 파이썬 객체를 JSON 문자열로 변환할 수 있습니다.
+'''
+
+'''jsonify 함수 (Flask에서):
+jsonify는 Flask 웹 프레임워크에서 제공되는 함수로, HTTP 응답을 JSON 형식으로 만들기 쉽게 도와줍니다.
+jsonify를 사용하면 딕셔너리나 기타 JSON-직렬화 가능한 객체를 받아서 해당 객체를 JSON 형식의 HTTP 응답으로 변환합니다.
+'''
+
+
+
+
+
