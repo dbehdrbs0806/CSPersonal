@@ -1,0 +1,190 @@
+# 모바일 부분 오류 및 해결 모음
+
+오류 log 확인 불가
+ ⇒ 직접 기기 연결해서 로그 확인하면 상세히 자세히 확인할 수 있음
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+: 오류 
+Your project has set `android.useAndroidX=true`, but configuration `:app:debugRuntimeClasspath` still contains legacy support libraries, which may cause runtime issues.
+This behavior will not be allowed in Android Gradle plugin 8.0.
+Please use only AndroidX dependencies or set `android.enableJetifier=true` in the `gradle.properties` file to migrate your project to AndroidX (see https://developer.android.com/jetpack/androidx/migrate for more info).
+The following legacy support libraries are detected:
+
+해결
+
+ # android.useAndroidX=true legacy 충돌 오류 발생 => 해결하려면 android.enableJetfier=true 추가
+android.enableJetifier=true
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+: 오류 
+
+Execution failed for task ':app:checkDebugAarMetadata'.
+
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+5 issues were found when checking AAR metadata:
+> 
+
+```
+   1.  Dependency 'androidx.appcompat:appcompat-resources:1.7.0' requires libraries and applications that
+       depend on it to compile against version 34 or later of the
+       Android APIs.
+
+       :app is currently compiled against android-33.
+
+       Also, the maximum recommended compile SDK version for Android Gradle
+       plugin 8.0.0 is 33.
+
+       Recommended action: Update this project's version of the Android Gradle
+       plugin to one that supports 34, then update this project to use
+       compileSdk of at least 34.
+
+       Note that updating a library or application's compileSdk (which
+       allows newer APIs to be used) can be done separately from updating
+       targetSdk (which opts the app in to new runtime behavior) and
+       minSdk (which determines which devices the app can be installed
+       on).
+```
+
+해결
+
+compileSdk 24 ⇒ 34 / targetSdk 24 ⇒ 34
+
+build.gradle에서 해당 내용의 버전을 수정해주면 해결
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+: 오류
+
+**checkdebugduplicateclasses failed**
+
+해결
+build.gradle에서 `implementation 'androidx.appcompat:appcompat:1.7.0'`  의 버전을 1.5.0으로 바꿔주면 해결됨
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+사진 촬영 준비 중 오류 발생
+java.lang.SecurityException: Permission Denial: starting Intent { act=android.media.action.IMAGE_CAPTURE flg=0x3 cmp=com.sec.android.app.camera/.Camera clip={text/uri-list hasLabel(0) {U(content)}} (has extras) } from ProcessRecord{9554e73 11418:com.example.cspersonal_phone/u0a378} (pid=11418, uid=10378) with revoked permission android.permission.CAMERA
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3069)
+at android.os.Parcel.createException(Parcel.java:3053)
+at android.os.Parcel.readException(Parcel.java:3036)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.app.IActivityTaskManager$Stub$Proxy.startActivity(IActivityTaskManager.java:3042)
+at android.app.Instrumentation.execStartActivity(Instrumentation.java:1873)
+at android.app.Activity.startActivityForResult(Activity.java:5780)
+at androidx.activity.ComponentActivity.startActivityForResult(ComponentActivity.java:705)
+at androidx.core.app.ActivityCompat$Api16Impl.startActivityForResult(ActivityCompat.java:766)
+at androidx.core.app.ActivityCompat.startActivityForResult(ActivityCompat.java:241)
+at androidx.activity.ComponentActivity$2.onLaunch(ComponentActivity.java:237)
+at androidx.activity.result.ActivityResultRegistry$2.launch(ActivityResultRegistry.java:175)
+at androidx.activity.result.ActivityResultLauncher.launch(ActivityResultLauncher.java:47)
+at com.example.cspersonal_phone.CameraActivity$1.onClick(CameraActivity.java:55)
+at android.view.View.performClick(View.java:8047)
+at android.widget.TextView.performClick(TextView.java:17792)
+at com.google.android.material.button.MaterialButton.performClick(MaterialButton.java:1131)
+at android.view.View.performClickInternal(View.java:8024)
+at android.view.View.-$$Nest$mperformClickInternal(Unknown Source:0)
+at android.view.View$PerformClick.run(View.java:31890)
+at android.os.Handler.handleCallback(Handler.java:958)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:230)
+at android.os.Looper.loop(Looper.java:319)
+at android.app.ActivityThread.main(ActivityThread.java:8934)
+at java.lang.reflect.Method.invoke(Native Method)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:578)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1103)
+Caused by: android.os.RemoteException: Remote stack trace:
+at com.android.server.wm.ActivityTaskSupervisor.checkStartAnyActivityPermission(ActivityTaskSupervisor.java:1361)
+at com.android.server.wm.ActivityStarter.executeRequest(ActivityStarter.java:1488)
+at com.android.server.wm.ActivityStarter.execute(ActivityStarter.java:1093)
+at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1985)
+at com.android.server.wm.ActivityTaskManagerService.startActivityAsUser(ActivityTaskManagerService.java:1844)
+
+⇒ 사진촬영의 권환 관련 오류
+`startActivityResult.launch(intent_picture);`  
+
+부분이 문제
+
+1. AndroidManifest.xml 에 권환 추가 
+
+`<uses-permission android:name="android.permission.CAMERA" />`
+
+1. 코드에서 명시적으로 권환확인 묻는 부분 추가
+
+AndroidManifest.xml에 권환을 추가하는 것은 명시적인 것으로 알리는 것에 불가 따라서 직접 코드에서 확인하는 부분의 코드가 필요  (Android 6.0(API 레벨 23)이상에서
+
+// 안드로이드 스튜디오에서는 Callback method 가 필요
+
+https://studyroadmap-kkm.tistory.com/91
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+촬영한 사진의 이미지 저장이 안되는 오류 그리고 코드 수정 사항
+
+```
+private File createImageFile() throws IOException {
+    // String TempFileName = new SimpleDateFormat("yyyyMMdd_HHMMSS").format(new Date());   // 현재 날짜와 시간을 형식에 맞게 저장
+    // File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);                  // 외부 저장소의 사진 디렉토리 내용 가져옴
+    File storageDir = new File(getFilesDir(), "Capture");
+    // File image = File.createTempFile(TempFileName, ".jpg", storageDir);              // 찍은 사진을 임시로 저장할 객체 생성
+    File image = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");
+    imageFilePath = image.getAbsolutePath();                                                // image 사진 파일의 경로를 저장
+    return image;                                                                           // 각각의 정보를 가진 image 반환
+}
+```
+
+createImageFile() 에서 저장이 되지 않은 이유 ⇒ 디렉토리의 경로문제로 예상
+`File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);` ⇒ 저장이 되지않음
+`File storageDir = new File(getFilesDir(), "Capture");` ⇒ 이와 같이 저장해야함
+
+버튼을 물리적으로 생성해 버튼의 fuction에 저장하는 기능을 대입
+
+```
+private void addConfirmButton(Button capture_button, ImageView imageView, String imageFilePath, File file) {
+    LinearLayout layout = findViewById(R.id.layout_camera);                                    // 레이아웃 객체 생성
+    Button confirmButton = new Button(this);                                            // 추가할 확인 버튼 객체 생성
+    confirmButton.setLayoutParams(new LinearLayout.LayoutParams(                               // 확인 버튼의 가로세로 크기 WRAP_CONTENT로 설정
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+));
+    confirmButton.setText("확인");
+    confirmButton.setLayoutParams(capture_button.getLayoutParams());
+
+    confirmButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // File storageDir = new File(getFilesDir(), "Capture");
+            /* if (!storageDir.exists()) {
+                storageDir.mkdirs();
+            } */
+            // 파일 경로와 이름을 적절히 설정
+            // File file = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");
+            try (FileOutputStream output = new FileOutputStream(file)) {
+                // ImageView imageView = findViewById(R.id.imageView1);                        // 이미지 뷰에서 비트맵 가져오기
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();            // 비트맵을 얻기 위한 함수 사용
+                if (drawable != null) {                                                        // drawable이 null이 아닌지 확인
+                    Bitmap bitmap = drawable.getBitmap();                                      // JPEG로 저장하기 위해 비트맵에 접근하기 위한 객체
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);           // JPEG 형식으로 저장
+                    Toast.makeText(getApplicationContext(), "이미지가 저장되었습니다: " + imageFilePath, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "이미지가 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "이미지 저장 실패: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    });
+    layout.addView(confirmButton); // 레이아웃에 버튼 추가
+}
+```
+
+`// boolean flag = false;        // 사진 촬영 이후의 확인 버튼 생성을 위한 flag` 
+
+대신
+
+```
+if (imageView.getDrawable() != null) {                              // ImageView가 찍은 사진으로 채워져 있으면 확인 버튼 생성
+    addConfirmButton(capture_button, imageView, imageFilePath, Capture_file);   // 확인 버튼 생성 함수
+}
+```
+
+사용
+
+

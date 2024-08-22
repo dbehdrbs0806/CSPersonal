@@ -47,19 +47,19 @@ public class CameraActivity extends AppCompatActivity {
     File Capture_file;              // 파일 객체
     Uri photoURI;                   // 사진의 uri 사용 할 변수
 
-    // boolean flag = false;                   // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
+    // boolean flag = false;        // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);                    // setContentView() activity_camera 를 띄움
+        setContentView(R.layout.activity_camera);                            // setContentView() activity_camera 를 띄움
 
         Button capture_button = findViewById(R.id.button1);                  // findViewById() 로 버튼 객체 (사진 촬영 버튼 객체) 알맞은 위젯 지정
         capture_button.setOnClickListener(new View.OnClickListener() {       // onClick() 지정
             @Override
             public void onClick(View v) {
                 try {
-                    Capture_file = createImageFile();                                                   // createImageFile()를 사용해 file 생성 날짜와 시간, 이름 등의 내용으로 이미지 파일 생성
+                    Capture_file = createImageFile();                                           // createImageFile()를 사용해 file 생성 날짜와 시간, 이름 등의 내용으로 이미지 파일 생성
                     Intent intent_picture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);        // 사진 촬영의 intent 객체 생성
                     if (intent_picture.resolveActivity(getPackageManager()) != null) {          // 핸드폰 기기에 사진 촬영 기능이 있을 경우
                         if (ContextCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {  // 카메라 권환이 없는 경우
@@ -121,16 +121,15 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
         layout.addView(confirmButton); // 레이아웃에 버튼 추가
-
     }
 
 
     // 촬영한 사진을 가지고 provider 해서 내부로 이동할 임시 사진파일 생성 함수
     private File createImageFile() throws IOException {
         // String TempFileName = new SimpleDateFormat("yyyyMMdd_HHMMSS").format(new Date());   // 현재 날짜와 시간을 형식에 맞게 저장
-        // File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);                  // 외부 저장소의 사진 디렉토리 내용 가져옴
+        // File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);              // 외부 저장소의 사진 디렉토리 내용 가져옴
         File storageDir = new File(getFilesDir(), "Capture");
-        // File image = File.createTempFile(TempFileName, ".jpg", storageDir);              // 찍은 사진을 임시로 저장할 객체 생성
+        // File image = File.createTempFile(TempFileName, ".jpg", storageDir);                // 찍은 사진을 임시로 저장할 객체 생성
         File image = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");
         imageFilePath = image.getAbsolutePath();                                                // image 사진 파일의 경로를 저장
         return image;                                                                           // 각각의 정보를 가진 image 반환

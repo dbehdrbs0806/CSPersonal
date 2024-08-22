@@ -224,7 +224,16 @@ public class test {
     }
 
 
-
+// 촬영한 사진을 가지고 provider 해서 내부로 이동할 임시 사진파일 생성 함수
+    private File createImageFile() throws IOException {
+        // String TempFileName = new SimpleDateFormat("yyyyMMdd_HHMMSS").format(new Date());   // 현재 날짜와 시간을 형식에 맞게 저장
+        // File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);                  // 외부 저장소의 사진 디렉토리 내용 가져옴
+        File storageDir = new File(getFilesDir(), "Capture");
+        // File image = File.createTempFile(TempFileName, ".jpg", storageDir);              // 찍은 사진을 임시로 저장할 객체 생성
+        File image = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");
+        imageFilePath = image.getAbsolutePath();                                                // image 사진 파일의 경로를 저장
+        return image;                                                                           // 각각의 정보를 가진 image 반환
+    }
 
 }
 
