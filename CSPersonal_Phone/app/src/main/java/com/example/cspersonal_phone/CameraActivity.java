@@ -86,6 +86,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void addConfirmButton(Button capture_button, ImageView imageView, String imageFilePath, File file) {
+        Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
         LinearLayout layout = findViewById(R.id.layout_camera);                                    // 레이아웃 객체 생성
         Button confirmButton = new Button(this);                                            // 추가할 확인 버튼 객체 생성
         confirmButton.setLayoutParams(new LinearLayout.LayoutParams(                               // 확인 버튼의 가로세로 크기 WRAP_CONTENT로 설정
@@ -118,6 +119,8 @@ public class CameraActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "이미지 저장 실패: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
+                startActivity(intent);
+                finish();
             }
         });
         layout.addView(confirmButton); // 레이아웃에 버튼 추가
