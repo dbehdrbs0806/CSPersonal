@@ -45,4 +45,7 @@ dependencies {
 
     implementation 'com.android.volley:volley:1.2.1'
     /* http 사용을 쉽게하는 volley 라이브러리 */
+
+    implementation "androidx.work:work-runtime-ktx:2.8.1"
+    /* workManager사용을 위한 라이브러리 */
 }
