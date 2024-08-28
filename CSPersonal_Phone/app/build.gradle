@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -46,6 +45,10 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     /* http 사용을 쉽게하는 volley 라이브러리 */
 
-    implementation "androidx.work:work-runtime-ktx:2.8.1"
-    /* workManager사용을 위한 라이브러리 */
+    implementation "androidx.work:work-runtime:2.9.1"
+    /* workManager사용을 위한 라이브러리
+       workManager 사용하려면 compileSdk 33 이상이여함 */
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+    /* java 객체 파일을 json으로 변환 시켜주는 라이브러리 gson */
 }

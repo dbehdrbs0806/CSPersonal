@@ -11,5 +11,7 @@
         android:layout_height="420dp"
         android:layout_gravity="center"
         android:max="100" />
+    <!-- style: 막대 모양으로 progressbar설정
+         max: progressbar의 최대 값-->
 
 </LinearLayout>
