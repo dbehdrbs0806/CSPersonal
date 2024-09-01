@@ -26,6 +26,9 @@ import java.util.concurrent.TimeUnit;
 public class ProgressWorker extends Worker {
 
     static RequestQueue requestQueue;        // volley 사용을 위한 rest api 요청을 담고 뱉을 요청 큐
+    String imageFilePath;                    // 사용할 이미지의 경로
+    String base64Image;                      // 이미지를 base64인코딩 처리한 문자열 값
+    Gson gson;                               // Gson 사용을 위한 객체 생성
 
     public ProgressWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
@@ -34,25 +37,30 @@ public class ProgressWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        String imageFilePath = // 이미지 경로를 저장
-
-
-        // null일 때 Queue 초기화
-        if (requestQueue == null) {
+        if (requestQueue == null) {                                       // requestQueue 사용을 위해 Queue를 초기화
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
+        gson = new Gson();
+        imageFilePath = CameraActivity.imageFilePath;                     // 이미지 경로를 static 변수를 사용해 가져옴
+        try {
+            base64Image = encodeImageToBase64(imageFilePath);                           // try-catch를 통해 base64를 통해 이미지 인코딩
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+       /* StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
             }
         });
 
-        Gson gson = new Gson();
-        Image image = gson.fromJson()
-
-
+        Gson gson = new Gson();*/
+        // Image image = gson.fromJson()
 
 
 
@@ -69,16 +77,16 @@ public class ProgressWorker extends Worker {
     }
 
 
-    private String encodeImageToBase64(String imagePath) throws IOException {
-        File file = new File(imagePath);
-        FileInputStream fis = new FileInputStream(file);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
+    private String encodeImageToBase64(String imagePath) throws IOException {        // base64를 사용한 이미지 인코딩 함수
         int bytesRead;
+        File file = new File(imagePath);                                             // 매개변수의 경로를 통해 File 객체 생성
+        FileInputStream fis = new FileInputStream(file);                             // File을 읽기위해 FileInputStream 생성
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();                     // 데이터를 바이트배열로 저장해 변환 함수를 위한 객체 ByteArrayOutputStream 생성
+        byte[] buffer = new byte[1024];                                              // FileInputStream으로 읽은 파일을 임시 저장할 배열
 
         // 파일을 -1 끝까지 읽어 바이트 배열로 변환
-        while ((bytesRead = fis.read(buffer)) != -1) {
-            bos.write(buffer, 0, bytesRead);
+        while ((bytesRead = fis.read(buffer)) != -1) {                               // FileInputStream 으로 파일을 -1까지 읽어
+            bos.write(buffer, 0, bytesRead);                                     // ByteArrayOutputStream 객체의 write() 통해 buffer에 저장
         }
         fis.close();
 
@@ -86,8 +94,8 @@ public class ProgressWorker extends Worker {
         return Base64.encodeToString(bos.toByteArray(), Base64.NO_WRAP);
     }
 
-    private void sendJson() {
-        Image Jsonimage =
+    private void saveTojson() {
+
     }
 
 }

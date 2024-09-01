@@ -43,9 +43,9 @@ import java.util.Date;
 public class CameraActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST_CODE = 100;  // 권환 요청 시 사용할 식별자 상수
-    String imageFilePath;           // 이미지 파일이 저장될 경로
-    File Capture_file;              // 파일 객체
-    Uri photoURI;                   // 사진의 uri 사용 할 변수
+    public static String imageFilePath;           // 이미지 파일이 저장될 경로
+    private File Capture_file;              // 파일 객체
+    private Uri photoURI;                   // 사진의 uri 사용 할 변수
 
     // boolean flag = false;        // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
@@ -109,8 +109,8 @@ public class CameraActivity extends AppCompatActivity {
                     // ImageView imageView = findViewById(R.id.imageView1);                        // 이미지 뷰에서 비트맵 가져오기
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();            // 비트맵을 얻기 위한 함수 사용
                     if (drawable != null) {                                                        // drawable이 null이 아닌지 확인
-                        Bitmap bitmap = drawable.getBitmap();                                      // JPEG로 저장하기 위해 비트맵에 접근하기 위한 객체
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);           // JPEG 형식으로 저장
+                        Bitmap bitmap = drawable.getBitmap();                                      // PNG로 저장하기 위해 비트맵에 접근하기 위한 객체
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);            // PNG 형식으로 저장
                         Toast.makeText(getApplicationContext(), "이미지가 저장되었습니다: " + imageFilePath, Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "이미지가 없습니다.", Toast.LENGTH_SHORT).show();

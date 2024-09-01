@@ -20,8 +20,8 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
         ProgressBar progressBar = findViewById(R.id.progressBar);          // ProgressBar 객체 생성
-        progressBar.setIndeterminate(true);                               // progressbar를 비확정적 상태표시로 설정
-        progressBar.setProgress(0);                                       // progress 시작을 0으로 설정
+        progressBar.setIndeterminate(true);                                // progressbar를 비확정적 상태표시로 설정
+        progressBar.setProgress(0);                                        // progress 시작을 0으로 설정
 
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(ProgressWorker.class).build(); // WorkManager 작업 생성
         WorkManager.getInstance(this).enqueue(workRequest);                                     // WorkManager 작업 큐에 추가
