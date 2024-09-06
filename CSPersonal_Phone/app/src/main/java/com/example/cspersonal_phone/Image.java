@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 // image 객체로 json으로 사용할 Gson 객체파일
 public class Image {
-
     @SerializedName("name")   // json key로 저장될 값
     private String name;
 
