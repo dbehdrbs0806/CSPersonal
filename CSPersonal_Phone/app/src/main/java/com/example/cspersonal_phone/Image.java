@@ -1,5 +1,4 @@
 package com.example.cspersonal_phone;
-
 import com.google.gson.annotations.SerializedName;
 
 // image 객체로 json으로 사용할 Gson 객체파일

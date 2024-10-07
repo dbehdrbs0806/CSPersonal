@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 public class LoadingActivity extends AppCompatActivity {
 
     static RequestQueue requestQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,17 +29,17 @@ public class LoadingActivity extends AppCompatActivity {
 
         // WorkManager의 진행 상태 관찰
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(workRequest.getId()).observe(this, new Observer<WorkInfo>() {
-                    @Override
-                    public void onChanged(WorkInfo workInfo) {
-                        if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING) {
-                            // 진행 상태 데이터 수신
-                            Data progress = workInfo.getProgress();
-                            int progressStatus = progress.getInt("PROGRESS", 0);
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING) {
+                    // 진행 상태 데이터 수신
+                    Data progress = workInfo.getProgress();
+                    int progressStatus = progress.getInt("PROGRESS", 0);
 
-                            // ProgressBar 업데이트
-                            progressBar.setProgress(progressStatus);
-                        }
-                    }
-                });
+                    // ProgressBar 업데이트
+                    progressBar.setProgress(progressStatus);
+                }
+            }
+        });
     }
 }

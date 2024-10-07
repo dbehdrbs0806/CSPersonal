@@ -234,7 +234,5 @@ public class test {
         imageFilePath = image.getAbsolutePath();                                                // image 사진 파일의 경로를 저장
         return image;                                                                           // 각각의 정보를 가진 image 반환
     }
-
 }
-
 */

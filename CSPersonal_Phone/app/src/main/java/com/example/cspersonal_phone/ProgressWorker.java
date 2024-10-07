@@ -39,8 +39,7 @@ public class ProgressWorker extends Worker {
     // String base64Image;                   // 이미지를 base64인코딩 처리한 문자열 값
     String jsonImage;
 
-    String url = "http://220.69.209.126:8080/personalcolor";
-
+    static final String url = "http://220.69.209.126:5070/personalcolor";
 
     public ProgressWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
@@ -51,7 +50,7 @@ public class ProgressWorker extends Worker {
 
     @NonNull
     @Override
-    public Result doWork() {
+    public Result doWork() {                                                            // 백그라운드 처리될 내용의 함수
         imageFilePath = CameraActivity.imageFilePath;                                   // 이미지 경로를 static 변수를 사용해 가져옴
         try {
             String base64Image = encodeImageToBase64();                                 // try-catch를 통해 base64를 통해 이미지 인코딩
@@ -62,10 +61,10 @@ public class ProgressWorker extends Worker {
             return Result.failure();
         }
 
-        for (int i = 0; i <= 100; i++) {   // 작업 로직: 0부터 100까지 Progress를 증가
+        for (int i = 0; i <= 100; i++) {                                               // 작업 로직: 0부터 100까지 Progress를 증가
             try {
-                TimeUnit.MILLISECONDS.sleep(100);  // 100ms마다 진행률 증가
-                setProgressAsync(new Data.Builder().putInt("PROGRESS", i).build());  // setProgressAsync(): 진행 상태를 MainActivity에 전달
+                TimeUnit.MILLISECONDS.sleep(100);                               // 100ms마다 진행률 증가
+                setProgressAsync(new Data.Builder().putInt("PROGRESS", i).build());    // setProgressAsync(): 진행 상태를 MainActivity에 전달
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return Result.failure();
@@ -73,7 +72,6 @@ public class ProgressWorker extends Worker {
         }
         return Result.success();
     }
-
 
     private String encodeImageToBase64() throws IOException {                        // base64를 사용한 이미지 인코딩 함수
         int bytesRead;
@@ -106,14 +104,22 @@ public class ProgressWorker extends Worker {
         return json;
     }
 
-    private void handleResult() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+    private void handleResult() {                                                    // 결과 전송 함수
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,    // Post 형식으로 rest api 보낼 내용 작성
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        // 서버로부터의 응답을 JSON 형태로 처리
+                    public void onResponse(String response) {                        // 서버로부터의 응답(response)을 JSON 형태로 처리
                         try {
-                            JSONObject jsonResponse = new JSONObject(response);                   // jsonResponse 가 받은 결과 객체
+                            JSONObject jsonResponse = new JSONObject(response);      // jsonResponse 가 받은
+                            // jsonResponse // json 결과 값 받은 봄 여름 겨울 가을
+
+                            // jsonResponse.get()  // 내용 가져와서
+
+
+                            // 변수에 넣어서 그걸
+                            // 배열에 저장해서 가져와 쓰려고했는ㄴ데
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -121,7 +127,7 @@ public class ProgressWorker extends Worker {
                         }
                     }
                 },
-                new Response.ErrorListener() {
+                new Response.ErrorListener() {                                       // 오류 발생 시 실행 될 부분
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("VolleyError", "Error: " + error.getMessage()); // 오류 처리
@@ -130,16 +136,16 @@ public class ProgressWorker extends Worker {
                 }) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return jsonImage.getBytes(); // JSON 데이터를 서버로 보냄
+                return jsonImage.getBytes();                                         // JSON 데이터를 서버로 보냄
             }
 
             @Override
             public String getBodyContentType() {
-                return "application/json; charset=utf-8"; // Content-Type 설정
+                return "application/json; charset=utf-8";                            // Content-Type 설정
             }
         };
 
-        requestQueue.add(stringRequest); // 요청 큐에 추가하여 비동기 요청 수행
+        requestQueue.add(stringRequest);                                             // 요청 큐에 추가하여 비동기 요청 수행
     }
 
 }

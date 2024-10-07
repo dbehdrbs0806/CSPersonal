@@ -47,7 +47,7 @@ public class CameraActivity extends AppCompatActivity {
     private File Capture_file;              // 파일 객체
     private Uri photoURI;                   // 사진의 uri 사용 할 변수
 
-    // boolean flag = false;        // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
+    // boolean flag = false;             // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,6 @@ public class CameraActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                 } catch (Exception e) {
                     Toast.makeText(CameraActivity.this, "사진 촬영 준비 중 오류 발생", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -110,7 +109,8 @@ public class CameraActivity extends AppCompatActivity {
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();            // 비트맵을 얻기 위한 함수 사용
                     if (drawable != null) {                                                        // drawable이 null이 아닌지 확인
                         Bitmap bitmap = drawable.getBitmap();                                      // PNG로 저장하기 위해 비트맵에 접근하기 위한 객체
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);            // PNG 형식으로 저장
+                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, 640, true);  // 640 * 640 사이즈로 크기를 scale하기 위한 createScaledBitmap()
+                        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, output);                           // PNG 형식으로 저장
                         Toast.makeText(getApplicationContext(), "이미지가 저장되었습니다: " + imageFilePath, Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "이미지가 없습니다.", Toast.LENGTH_SHORT).show();
