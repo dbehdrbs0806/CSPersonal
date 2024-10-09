@@ -46,6 +46,12 @@
             android:exported="true">
         </activity>
 
+        <!-- ResultActivity 추가 -->
+        <activity
+            android:name=".ResultActivity"
+            android:exported="true">
+        </activity>
+
         <!--  fileprovider 설정  -->
         <!--  ${applicationId} 패키지 이름  -->
         <provider

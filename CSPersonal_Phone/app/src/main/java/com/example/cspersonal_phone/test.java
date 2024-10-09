@@ -235,4 +235,22 @@ public class test {
         return image;                                                                           // 각각의 정보를 가진 image 반환
     }
 }
+
+
+
+// WorkManager의 진행 상태 관찰
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(workRequest.getId()).observe(this, new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING) {
+                    // 진행 상태 데이터 수신
+                    Data progress = workInfo.getProgress();
+                    int progressStatus = progress.getInt("PROGRESS", 0);
+
+                    // ProgressBar 업데이트
+                    progressBar.setProgress(progressStatus);
+                }
+            }
+        });
+    }
 */
