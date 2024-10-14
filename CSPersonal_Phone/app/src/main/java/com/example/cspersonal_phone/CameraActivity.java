@@ -47,7 +47,7 @@ public class CameraActivity extends AppCompatActivity {
     private File Capture_file;              // 파일 객체
     private Uri photoURI;                   // 사진의 uri 사용 할 변수
 
-    // boolean flag = false;             // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
+    // boolean flag = false;                // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

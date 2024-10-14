@@ -23,7 +23,7 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
-        progressBar = findViewById(R.id.progressBar);          // ProgressBar 객체 생성
+        progressBar = findViewById(R.id.progressBar);                      // ProgressBar 객체 생성
         progressBar.setIndeterminate(true);                                // progressbar를 비확정적 상태표시로 설정
         progressBar.setProgress(0);                                        // progress 시작을 0으로 설정
         progressBar.setMax(100);
@@ -48,7 +48,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 progressBar.setProgress(progress);
                             }
 
-                            // 완료되면 결과를 받음
+                               // 완료되면 결과를 받음
                             if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                                 Data outputData = workInfo.getOutputData();
                                 String name = outputData.getString("name");
