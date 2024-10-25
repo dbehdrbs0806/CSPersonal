@@ -15,7 +15,6 @@ import com.android.volley.RequestQueue;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    // static RequestQueue requestQueue;
     private ProgressBar progressBar;
 
     @Override
@@ -70,37 +69,6 @@ public class LoadingActivity extends AppCompatActivity {
                                 finish();  // 현재 Activity 종료
                             }
                         }
-                        /* WorkManager.getInstance(this).getWorkInfoByIdLiveData(workRequest.getId()).observe(this, workInfo -> {
-            if (workInfo != null) {
-                if (workInfo.getState() == WorkInfo.State.RUNNING) {
-                    // 진행 상태 데이터 수신
-                    Data progress = workInfo.getProgress();
-                    int progressStatus = progress.getInt("PROGRESS", 0);
-
-                    // ProgressBar 업데이트
-                    progressBar.setProgress(progressStatus);
-                } else if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                    // 작업이 완료된 경우, 결과 데이터를 받아 새로운 Activity로 이동
-                    Data outputData = workInfo.getOutputData();
-                    String name = outputData.getString("name");
-                    String timestamp = outputData.getString("timestamp");
-                    int spring = outputData.getInt("spring", 0);
-                    int summer = outputData.getInt("summer", 0);
-                    int fall = outputData.getInt("fall", 0);
-                    int winter = outputData.getInt("winter", 0);
-
-                    // Intent를 통해 결과 데이터를 다음 Activity로 전달
-                    Intent intent = new Intent(LoadingActivity.this, ResultActivity.class);
-                    intent.putExtra("name", name);
-                    intent.putExtra("timestamp", timestamp);
-                    intent.putExtra("spring", spring);
-                    intent.putExtra("summer", summer);
-                    intent.putExtra("fall", fall);
-                    intent.putExtra("winter", winter);
-                    startActivity(intent);  // 새로운 Activity로 이동
-                    finish();  // 현재 Activity 종료
-                }
-            } */
                     }
         });
     }
