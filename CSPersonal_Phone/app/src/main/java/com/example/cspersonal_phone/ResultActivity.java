@@ -42,12 +42,12 @@ public class ResultActivity extends AppCompatActivity {
             setContentView(R.layout.activity_winter);
         }
 
-        resultTextView = findViewById(R.id.resultTextView);                  // TextView 생성
+        /*resultTextView = findViewById(R.id.resultTextView);                  // TextView 생성
 
         // Intent로부터 데이터 수신
 
 
-        /*// 데이터를 TextView에 출력 */
+        // 데이터를 TextView에 출력 /
         resultTextView.setText();
 
 
@@ -58,7 +58,7 @@ public class ResultActivity extends AppCompatActivity {
                 Intent restultintent = new(getApplicationContext(),// 다음 옷 선택 액티비티)
 
             }
-        });
+        });*/
     }
 
     public String highest_color(int a, int b, int c, int d) {                   // Math.max 메소드를 사용해 가장 큰값을 알아냄

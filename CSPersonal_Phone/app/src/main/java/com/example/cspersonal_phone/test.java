@@ -286,4 +286,3 @@ public class test {
                     finish();  // 현재 Activity 종료
                 }
             } */
-*/
