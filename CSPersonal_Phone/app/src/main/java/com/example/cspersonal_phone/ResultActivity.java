@@ -11,12 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private DatabaseHelper dbHelper;
+
     String name;                                      // 처리한 결과 데이터의 이름
     String timestamp;                                 // 처리한 결과 데이터의 시간
     int spring;                                       // 처리한 결과 봄 값
     int summer;                                       // 처리한 결과 여름 값
-    int fall;                                         // 처리한 결과 가을 값
+    int autumn;                                         // 처리한 결과 가을 값
     int winter;                                       // 처리한 결과 겨울 값
+
+    String perosonalColor;
+
+    Button Match_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,39 +32,37 @@ public class ResultActivity extends AppCompatActivity {
         timestamp = intent.getStringExtra("timestamp");
         spring = intent.getIntExtra("spring", 0);
         summer = intent.getIntExtra("summer", 0);
-        fall = intent.getIntExtra("fall", 0);
+        autumn = intent.getIntExtra("autumn", 0);
         winter = intent.getIntExtra("winter", 0);
-        String color = highest_color(spring, summer, fall, winter);
-        if (color == "spring") {
+
+        Match_button = findViewById(R.id.Match_button);
+
+        perosonalColor = highest_color(spring, summer, autumn, winter);
+        if (perosonalColor == "spring") {
             setContentView(R.layout.activity_spring);
         }
-        else if (color == "summer") {
+        else if (perosonalColor == "summer") {
             setContentView(R.layout.activity_summer);
         }
-        else if (color == "fall") {
-            setContentView(R.layout.activity_fall);
+        else if (perosonalColor == "autumn") {
+            setContentView(R.layout.activity_autumn);;
         }
-        else if (color == "winter") {
+        else if (perosonalColor == "winter") {
             setContentView(R.layout.activity_winter);
         }
+        // dbHelper에 있는 insert 함수를 사용해 DB에 데이터 삽입
+        dbHelper.INSERT_User(dbHelper.getWritableDatabase(), name, timestamp, spring, summer, autumn, winter, perosonalColor);
 
-        /*resultTextView = findViewById(R.id.resultTextView);                  // TextView 생성
-
-        // Intent로부터 데이터 수신
-
-
-        // 데이터를 TextView에 출력 /
-        resultTextView.setText();
-
-
-        Button button1 = findViewById(R.id.button);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Match_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent restultintent = new(getApplicationContext(),// 다음 옷 선택 액티비티)
-
+            public void onClick(View v) {
+                Intent intent2 = new Intent(ResultActivity.this, ColorMatchActivity.class);
+                intent2.putExtra("name", name);
+                intent2.putExtra("personalColor", perosonalColor);
+                startActivity(intent2);
+                finish();
             }
-        });*/
+        });
     }
 
     public String highest_color(int a, int b, int c, int d) {                   // Math.max 메소드를 사용해 가장 큰값을 알아냄
@@ -69,11 +73,19 @@ public class ResultActivity extends AppCompatActivity {
         else if(summer == temp) {
             return "summer";
         }
-        else if(fall == temp) {
-            return "fall";
+        else if(autumn == temp) {
+            return "autumn";
         }
         else {
             return "winter";
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.close();                                               // DatabaseHelper 닫기
         }
     }
 }

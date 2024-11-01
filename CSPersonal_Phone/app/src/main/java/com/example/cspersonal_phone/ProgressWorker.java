@@ -46,9 +46,8 @@ public class ProgressWorker extends Worker {
     private String timestamp;                // 받은 데이터의 timestamp
     private int spring;                      // 받은 데이터의 spring 값
     private int summer;                      // 받은 데이터의 summer 값
-    private int fall;                        // 받은 데이터의 fall 값
+    private int autumn;                      // 받은 데이터의 autumn 값
     private int winter;                      // 받은 데이터의 winter 값
-
 
 
     public ProgressWorker(@NonNull Context context, @NonNull WorkerParameters params) {
@@ -66,40 +65,35 @@ public class ProgressWorker extends Worker {
             String base64Image = encodeImageToBase64();                                 // try-catch를 통해 base64를 통해 이미지 인코딩
             jsonImage = saveTojson(base64Image);
 
-            // 3. 서버와 통신 및 응답 처리 (기존 handleResult 메서드 사용)
-            handleResult();
+            handleResult();                                                             // handleResult() 로 서버로부터 응답 받음
 
-            // 4. 응답 대기 중 진행률 업데이트
+            // 응답 대기 중 진행률 업데이트
             for (int i = 0; i <= 99; i++) {
                 Thread.sleep(100);  // 대기 시간 동안 진행률 증가
                 setProgressAsync(new Data.Builder().putInt("PROGRESS", i).build());
             }
 
-            // 5. 응답이 올 때까지 대기
+            // 응답이 올 때까지 대기
             while (name == null) {
                 Thread.sleep(100);
             }
             // 응답 완료 후 진행률 100% 업데이트
             setProgressAsync(new Data.Builder().putInt("PROGRESS", 100).build());
 
-            // 6. 성공 결과 반환
-
+            // 성공 결과 반환
             Data outputData = new Data.Builder()
                     .putString("name", name)
                     .putString("timestamp", timestamp)
                     .putInt("spring", spring)
                     .putInt("summer", summer)
-                    .putInt("fall", fall)
+                    .putInt("autumn", autumn)
                     .putInt("winter", winter)
                     .build();
-
-            return Result.success(outputData);  // 결과를 WorkManager로 전달
-
+            return Result.success(outputData);                                          // 비동기 progressworker가 success 되어 받음
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return Result.failure();
         }
-
         /*for (int i = 0; i <= 100; i++) {                                               // 작업 로직: 0부터 100까지 Progress를 증가
             try {
                 TimeUnit.MILLISECONDS.sleep(100);                               // 100ms마다 진행률 증가
@@ -155,12 +149,8 @@ public class ProgressWorker extends Worker {
                             timestamp = jsonResponse.getString("timestamp");
                             spring = jsonResponse.getInt("spring");
                             summer = jsonResponse.getInt("summer");
-                            fall = jsonResponse.getInt("fall");
+                            autumn = jsonResponse.getInt("autumn");
                             winter = jsonResponse.getInt("winter");
-                            // jsonResponse.get()  // 내용 가져와서
-
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("JSONError", "JSON Parsing error: " + e.getMessage());

@@ -46,30 +46,28 @@ public class LoadingActivity extends AppCompatActivity {
                                 // ProgressBar 업데이트
                                 progressBar.setProgress(progress);
                             }
-
-                               // 완료되면 결과를 받음
-                            if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                                Data outputData = workInfo.getOutputData();
+                            if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {                    // 완료되면 결과를 받음
+                                Data outputData = workInfo.getOutputData();                           // Data 객체가 받은 결과
                                 String name = outputData.getString("name");
                                 String timestamp = outputData.getString("timestamp");
                                 int spring = outputData.getInt("spring", 0);
                                 int summer = outputData.getInt("summer", 0);
-                                int fall = outputData.getInt("fall", 0);
+                                int autumn = outputData.getInt("autumn", 0);
                                 int winter = outputData.getInt("winter", 0);
-
                                 // 결과 데이터를 다음 Activity에 전달
                                 Intent intent = new Intent(LoadingActivity.this, ResultActivity.class);
                                 intent.putExtra("name", name);
                                 intent.putExtra("timestamp", timestamp);
                                 intent.putExtra("spring", spring);
                                 intent.putExtra("summer", summer);
-                                intent.putExtra("fall", fall);
+                                intent.putExtra("autumn", autumn);
                                 intent.putExtra("winter", winter);
-                                startActivity(intent);  // 새로운 Activity로 이동
-                                finish();  // 현재 Activity 종료
+
+                                startActivity(intent);                                                // 새로운 Activity로 이동
+                                finish();                                                             // 현재 Activity 종료
                             }
                         }
                     }
-        });
+                });
     }
 }

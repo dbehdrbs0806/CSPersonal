@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:id="@+id/top_ImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+    <ImageView
+        android:id="@+id/bottom_ImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageButton
+        android:id="@+id/left_change_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageButton
+        android:id="@+id/right_change_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageButton
+        android:id="@+id/recommend_color_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageButton
+        android:id="@+id/recommend_color_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon"
+        android:layout_marginTop="16dp" />
+
+    <ImageButton
+        android:id="@+id/recommend_color_button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+    <ImageButton
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+</LinearLayout>

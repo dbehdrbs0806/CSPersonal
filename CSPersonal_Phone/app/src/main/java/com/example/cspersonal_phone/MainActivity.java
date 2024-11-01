@@ -2,11 +2,9 @@ package com.example.cspersonal_phone;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,9 +26,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
     }
-
 }
