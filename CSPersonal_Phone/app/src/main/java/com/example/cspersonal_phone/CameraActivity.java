@@ -48,6 +48,8 @@ public class CameraActivity extends AppCompatActivity {
     private File Capture_file;              // 파일 객체
     private Uri photoURI;                   // 사진의 uri 사용 할 변수
 
+    private ImageButton capture_button;     // 캡처 버튼
+
     // boolean flag = false;                // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
     @Override
@@ -55,7 +57,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);                            // setContentView() activity_camera 를 띄움
 
-        ImageButton capture_button = findViewById(R.id.imageButton);                  // findViewById() 로 버튼 객체 (사진 촬영 버튼 객체) 알맞은 위젯 지정
+        capture_button = findViewById(R.id.imageButton);                  // findViewById() 로 버튼 객체 (사진 촬영 버튼 객체) 알맞은 위젯 지정
         capture_button.setOnClickListener(new View.OnClickListener() {       // onClick() 지정
             @Override
             public void onClick(View v) {

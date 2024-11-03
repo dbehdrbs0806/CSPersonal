@@ -28,14 +28,16 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();                  // 그전 Intent()에서 가져온 내용을 가져옴
+        Match_button = findViewById(R.id.Match_button);
+
+        dbHelper = new DatabaseHelper(this);
+
         name = intent.getStringExtra("name");
         timestamp = intent.getStringExtra("timestamp");
         spring = intent.getIntExtra("spring", 0);
         summer = intent.getIntExtra("summer", 0);
         autumn = intent.getIntExtra("autumn", 0);
         winter = intent.getIntExtra("winter", 0);
-
-        Match_button = findViewById(R.id.Match_button);
 
         perosonalColor = highest_color(spring, summer, autumn, winter);
         if (perosonalColor == "spring") {

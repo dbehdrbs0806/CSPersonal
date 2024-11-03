@@ -19,16 +19,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {           // database 사
                     "AUTUMN INTEGER, " +
                     "WINTER INTEGER, " +
                     "PERSONAL_COLOR TEXT DEFAULT NULL)";  // NULL 값 허용
+    // OUTFIT의 INTEGER 상의 0 하의 1
     private static final String SQL_CREATE_TABLE_OUTFIT =
             "CREATE TABLE " + "Outfit" + " (" +
                     "OUTFIT_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "OUTFIT_TYPE TEXT, " +
+                    "OUTFIT_TYPE INTEGER, " +
                     "OUTFIT_CODE TEXT)";
 
+    //
     private static final String SQL_CREATE_TABLE_COLOR =
             "CREATE TABLE " + "COLOR" + " (" +
                     "COLOR_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "COLOR_SEASON TEXT, " +
+                    "COLOR_SEASON INTEGER, " +
                     "COLUMN_CODE TEXT)";
 
 
