@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// 미완성
+// 필요한 내용: DB 생성 및 사용 / 퍼스널컬러 결정 / 퍼스널컬러에 알맞는 레이아웃 선택
+// 수정해야할 사항:
 public class ResultActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;

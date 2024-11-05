@@ -13,8 +13,11 @@ import androidx.work.WorkManager;
 
 import com.android.volley.RequestQueue;
 
-public class LoadingActivity extends AppCompatActivity {
+// 미완성 근데 상관없음
+// 필요한 내용: 로딩 바 / 로딩 바에 얼마나 진행됬는지 %퍼센테이지 표현
+// 수정해야할 사항: %퍼센테이지 구현
 
+public class LoadingActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     @Override

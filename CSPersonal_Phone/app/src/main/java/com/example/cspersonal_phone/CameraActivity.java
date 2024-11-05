@@ -12,11 +12,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,39 +24,44 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-// import com.example.cspersonal_phone.BuildConfig;
+// 완성
+// 필요한 내용: 카메라 camera activity / 카메라 사용의 권한 설정 / 찍은 사진 저장 그리고 ImageView로 불러옴 / 확인 버튼 이벤트 후 생성
+// 재확인할 때 새로운 drawable이미지가 배경으로 뜨게하고 버튼도 다 바뀌게 해야함 => 했음
+// 수정해야할 사항: X
 
 public class CameraActivity extends AppCompatActivity {
 
     private static final int CAMERA_REQUEST_CODE = 100;  // 권환 요청 시 사용할 식별자 상수
-    public static String imageFilePath;           // 이미지 파일이 저장될 경로
-    private File Capture_file;              // 파일 객체
-    private Uri photoURI;                   // 사진의 uri 사용 할 변수
+    private LinearLayout activity_camera_layout;         // activity_camera layout 객체
+    public static String imageFilePath;                  // 이미지 파일이 저장될 경로
+    private File Capture_file;                           // 파일 객체
+    private Uri photoURI;                                // 사진의 uri 사용 할 변수
+    private ImageButton capture_button;                  // 캡처 버튼
 
-    private ImageButton capture_button;     // 캡처 버튼
+    private ImageView capture_imageView;                 // 찍은 사진을 띄울 ImageView
 
-    // boolean flag = false;                // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
+    private ImageButton confirmButton;                   // 생성할 확인 ImageButton
+
+    private boolean flag = false;                        // 사진 촬영 이후의 확인 버튼 생성을 위한 flag
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);                            // setContentView() activity_camera 를 띄움
 
-        capture_button = findViewById(R.id.imageButton);                  // findViewById() 로 버튼 객체 (사진 촬영 버튼 객체) 알맞은 위젯 지정
-        capture_button.setOnClickListener(new View.OnClickListener() {       // onClick() 지정
+        activity_camera_layout = findViewById(R.id.layout_camera);           // 레이아웃 객체 생성
+
+        capture_button = findViewById(R.id.imageButton);                    // findViewById() 로 버튼 객체 (사진 촬영 버튼 객체) 알맞은 위젯 지정
+        capture_button.setOnClickListener(new View.OnClickListener() {      // onClick() 지정
             @Override
             public void onClick(View v) {
                 try {
@@ -70,12 +73,12 @@ public class CameraActivity extends AppCompatActivity {
                         } else {
                             photoURI = FileProvider.getUriForFile(CameraActivity.this, "com.example.cspersonal_phone", Capture_file);
                             intent_picture.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                            startActivityResult.launch(intent_picture);                         // 찍고 사진의 내용을 화면에 띄우기 위해 돌아오는 startActivityResult()사용
+                            startActivityResult.launch(intent_picture);                        // 찍고 사진의 내용을 화면에 띄우기 위해 돌아오는 startActivityResult()사용
                             // file.createNewFile();                                            // 찍은 file의 내용으로 createNewFile() 사용
-                            ImageView imageView = findViewById(R.id.imageView1);                // 찍은 사진 띄울 ImageView 객체
-
-                            if (imageView.getDrawable() != null) {                              // ImageView가 찍은 사진으로 채워져 있으면 확인 버튼 생성
-                                addConfirmButton(capture_button, imageView, imageFilePath, Capture_file);   // 확인 버튼 생성 함수
+                            capture_imageView = findViewById(R.id.imageView1);                 // 찍은 사진 띄울 ImageView 객체
+                            if (!flag) {                              // ImageView가 찍은 사진으로 채워져 있으면 확인 버튼 생성
+                                addConfirmButton(capture_button, capture_imageView, imageFilePath, Capture_file);   // 확인 버튼 생성 함수
+                                flag = true;
                             }
                         }
                     }
@@ -87,17 +90,35 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
-    private void addConfirmButton(Button capture_button, ImageView imageView, String imageFilePath, File file) {
+    private void addConfirmButton(ImageButton capture_button, ImageView imageView, String imageFilePath, File file) {
         Intent intent = new Intent(getApplicationContext(), LoadingActivity.class);
-        LinearLayout layout = findViewById(R.id.layout_camera);                                    // 레이아웃 객체 생성
-        Button confirmButton = new Button(this);                                            // 추가할 확인 버튼 객체 생성
+
+        activity_camera_layout.setBackgroundResource(R.drawable.activity_camera_background_check);
+        capture_button.setBackgroundResource(R.drawable.activity_camera_retakephotobutton);
+
+
+        // activity_camera_layout = findViewById(R.id.layout_camera);                              // 레이아웃 객체 생성
+
+
+        confirmButton = new ImageButton(this);                                              // 추가할 확인 버튼 객체 생성
         confirmButton.setLayoutParams(new LinearLayout.LayoutParams(                               // 확인 버튼의 가로세로 크기 WRAP_CONTENT로 설정
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         ));
-        confirmButton.setText("확인");
-        confirmButton.setLayoutParams(capture_button.getLayoutParams());
 
+        // dp 단위를 px로 변환
+        int widthInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 640, getResources().getDisplayMetrics());
+        int heightInPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+
+        // 확인 버튼 생성 시 크기를 XML과 동일하게 설정
+        confirmButton.setLayoutParams(new LinearLayout.LayoutParams(
+                widthInPx, // 너비를 640dp와 동일하게 설정
+                heightInPx // 높이를 80dp와 동일하게 설정
+        ));
+
+        confirmButton.setBackgroundResource(R.drawable.activity_camera_confirmbutton);
+        activity_camera_layout.invalidate();                                                       // 강제로 UI 갱신
+        activity_camera_layout.addView(confirmButton);                                             // 레이아웃에 버튼 추가
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +147,6 @@ public class CameraActivity extends AppCompatActivity {
                 finish();
             }
         });
-        layout.addView(confirmButton); // 레이아웃에 버튼 추가
     }
 
 
@@ -134,9 +154,9 @@ public class CameraActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // String TempFileName = new SimpleDateFormat("yyyyMMdd_HHMMSS").format(new Date());   // 현재 날짜와 시간을 형식에 맞게 저장
         // File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);              // 외부 저장소의 사진 디렉토리 내용 가져옴
-        File storageDir = new File(getFilesDir(), "Capture");
-        // File image = File.createTempFile(TempFileName, ".jpg", storageDir);                // 찍은 사진을 임시로 저장할 객체 생성
-        File image = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");
+        File storageDir = new File(getFilesDir(), "Capture");                             // 파일을 저장할 Capture 디렉토리 객체 storageDir 생성
+        // File image = File.createTempFile(TempFileName, ".jpg", storageDir);                 // 찍은 사진을 임시로 저장할 객체 생성
+        File image = new File(storageDir, "image_" + System.currentTimeMillis() + ".jpg");// 찍은 사진을 담을 이미지 생성
         imageFilePath = image.getAbsolutePath();                                                // image 사진 파일의 경로를 저장
         return image;                                                                           // 각각의 정보를 가진 image 반환
     }
@@ -149,7 +169,7 @@ public class CameraActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
 
                     ImageView imageView;                                                        // 이미지 뷰 객체 (촬영한 사진 이미지 뷰 객체)
-                    imageView = findViewById(R.id.imageView1);                                  // 알맞은 위젯 지정
+                    imageView = findViewById(R.id.imageView1);                                  // 캡쳐한 이미지 뷰를 imageView1에 대입 capture_imageView
 
                     if (result.getResultCode() == Activity.RESULT_OK) {                         // 사진촬영 인텐트가 성공적일 시 실행
                         Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);                // image 사진파일 경로인 imageFilePath를 디코딩해서 bitmap으로 표현

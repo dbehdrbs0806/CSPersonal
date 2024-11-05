@@ -7,23 +7,26 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/activity_camera_background">
     <!-- android:orientation="vertical"은 세로로 작성
          android;gravity="center"은 가운데 정렬 -->
     <!-- 사진 촬영 버튼  -->
+
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="750dp"
-        android:background="@android:color/transparent"
+        android:layout_width="550dp"
+        android:layout_height="580dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/activity_camera_tab"
         android:scaleType="fitCenter" />
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="641dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/takephoto_button"
+        android:layout_width="640dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="130dp"
+        android:background="@drawable/activity_camera_takephotobutton"
         android:scaleType="centerInside" />
 
 </LinearLayout>

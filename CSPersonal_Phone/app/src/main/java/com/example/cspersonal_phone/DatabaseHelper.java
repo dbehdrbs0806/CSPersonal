@@ -31,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {           // database 사
             "CREATE TABLE " + "COLOR" + " (" +
                     "COLOR_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "COLOR_SEASON INTEGER, " +
+                    "COLOR_TYPE INTEGER," +
                     "COLUMN_CODE TEXT)";
 
 
@@ -76,4 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {           // database 사
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(SQL_SELECT_TABLE_OUTFIT, null);
     }
+
+    /*public Cursor SELECT_ALL_COLOR(SQLiteDatabase db) {
+        db = this.getReadableDatabase();
+        return db.rawQuery(SQL_SELECT_TABLE_COLOR);
+    }*/
 }

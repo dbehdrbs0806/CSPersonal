@@ -8,11 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class ColorMatchActivity extends AppCompatActivity {
 
@@ -69,22 +66,27 @@ public class ColorMatchActivity extends AppCompatActivity {
 
         // OUTFIT테이블의 내용을 조회해 배열에 넣는 과정
         // cirsor.getColumnIndex에서 접근 시 -1의 반환으로 오류가 발생할 수 있음 이를 @SuppressLint("Range") 으로 차단함 인지 필요
-        Cursor cursor = dbHelper.SELECT_ALL_OUTFIT();
-        if (cursor != null && cursor.moveToFirst()) {
+        Cursor outfit_cursor = dbHelper.SELECT_ALL_OUTFIT();
+        if (outfit_cursor != null && outfit_cursor.moveToFirst()) {
             do {
-                outfit.setOUTFIT_ID(cursor.getInt(cursor.getColumnIndex("OUTFIT_ID")));
-                int outfitType = cursor.getInt(cursor.getColumnIndex("OUTFIT_TYPE"));
+                outfit.setOUTFIT_ID(outfit_cursor.getInt(outfit_cursor.getColumnIndex("OUTFIT_ID")));
+                int outfitType = outfit_cursor.getInt(outfit_cursor.getColumnIndex("OUTFIT_TYPE"));
                 outfit.setOUTFIT_TYPE(outfitType);
-                outfit.setOUTFIT_CODE(cursor.getString(cursor.getColumnIndex("OUTFIT_CODE")));
+                outfit.setOUTFIT_CODE(outfit_cursor.getString(outfit_cursor.getColumnIndex("OUTFIT_CODE")));
 
                 if (outfitType == OUTFIT.TYPE_TOP) {
                     topIcons.add(outfit);  // 상의 아이콘 추가
                 } else if (outfitType == OUTFIT.TYPE_BOTTOM) {
                     bottomIcons.add(outfit);  // 하의 아이콘 추가
                 }
-            } while (cursor.moveToNext());
-            cursor.close();
+            } while (outfit_cursor.moveToNext());
+            outfit_cursor.close();
         }
+       /* Cursor colcor_cursor = dbHelper.SELECT_ALL_COLOR();
+        if (colcor_cursor != null && colcor_cursor.moveToFirst()) {
+
+        }
+*/
 
 
         left_change_button.setOnClickListener(new View.OnClickListener() {
