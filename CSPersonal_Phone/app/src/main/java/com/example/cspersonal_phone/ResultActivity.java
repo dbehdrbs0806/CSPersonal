@@ -2,8 +2,10 @@ package com.example.cspersonal_phone;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,15 +26,14 @@ public class ResultActivity extends AppCompatActivity {
     int winter;                                       // 처리한 결과 겨울 값
 
     String perosonalColor;
+    int personalColorint;                             // 퍼스널컬러 int값
 
-    Button Match_button;
+    ImageButton Match_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();                  // 그전 Intent()에서 가져온 내용을 가져옴
-        Match_button = findViewById(R.id.Match_button);
-
         dbHelper = new DatabaseHelper(this);
 
         name = intent.getStringExtra("name");
@@ -42,18 +43,33 @@ public class ResultActivity extends AppCompatActivity {
         autumn = intent.getIntExtra("autumn", 0);
         winter = intent.getIntExtra("winter", 0);
 
+
+        Log.d("Color", "Spring value: " + spring);
+        Log.d("Color", "Summer value: " + summer);
+        Log.d("Color", "Autumn value: " + autumn);
+        Log.d("Color", "Winter value: " + winter);
+
         perosonalColor = highest_color(spring, summer, autumn, winter);
+
         if (perosonalColor == "spring") {
             setContentView(R.layout.activity_spring);
+            Match_button = findViewById(R.id.imageButton0);
+            personalColorint = 0;
         }
         else if (perosonalColor == "summer") {
             setContentView(R.layout.activity_summer);
+            Match_button = findViewById(R.id.imageButton1);
+            personalColorint = 1;
         }
         else if (perosonalColor == "autumn") {
-            setContentView(R.layout.activity_autumn);;
+            setContentView(R.layout.activity_autumn);
+            Match_button = findViewById(R.id.imageButton2);
+            personalColorint = 2;
         }
         else if (perosonalColor == "winter") {
             setContentView(R.layout.activity_winter);
+            Match_button = findViewById(R.id.imageButton3);
+            personalColorint = 3;
         }
         // dbHelper에 있는 insert 함수를 사용해 DB에 데이터 삽입
         dbHelper.INSERT_User(dbHelper.getWritableDatabase(), name, timestamp, spring, summer, autumn, winter, perosonalColor);
@@ -63,7 +79,7 @@ public class ResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent2 = new Intent(ResultActivity.this, ColorMatchActivity.class);
                 intent2.putExtra("name", name);
-                intent2.putExtra("personalColor", perosonalColor);
+                intent2.putExtra("personalColorint", personalColorint);
                 startActivity(intent2);
                 finish();
             }

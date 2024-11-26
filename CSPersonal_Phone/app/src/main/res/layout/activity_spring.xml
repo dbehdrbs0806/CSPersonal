@@ -23,10 +23,10 @@
         app:srcCompat="@drawable/activity_spring_palette" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageButton0"
         android:layout_width="210dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/activity_spring_matchbutton" />
-
+        android:background="@drawable/activity_spring_matchbutton"
+        android:contentDescription="매칭 버튼"/>
 </LinearLayout>

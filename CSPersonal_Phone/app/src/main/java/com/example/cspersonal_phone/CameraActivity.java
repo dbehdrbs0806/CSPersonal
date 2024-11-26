@@ -83,7 +83,7 @@ public class CameraActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
-                    Toast.makeText(CameraActivity.this, "사진 촬영 준비 중 오류 발생", Toast.LENGTH_SHORT).show();
+
                     e.printStackTrace();
                 }
             }
@@ -135,7 +135,7 @@ public class CameraActivity extends AppCompatActivity {
                         Bitmap bitmap = drawable.getBitmap();                                      // PNG로 저장하기 위해 비트맵에 접근하기 위한 객체
                         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 640, 640, true);  // 640 * 640 사이즈로 크기를 scale하기 위한 createScaledBitmap()
                         scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, output);                           // PNG 형식으로 저장
-                        Toast.makeText(getApplicationContext(), "이미지가 저장되었습니다: " + imageFilePath, Toast.LENGTH_LONG).show();
+
                     } else {
                         Toast.makeText(getApplicationContext(), "이미지가 없습니다.", Toast.LENGTH_SHORT).show();
                     }

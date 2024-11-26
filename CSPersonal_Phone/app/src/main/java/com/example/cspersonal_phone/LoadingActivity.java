@@ -3,6 +3,7 @@ package com.example.cspersonal_phone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -11,14 +12,13 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.android.volley.RequestQueue;
-
 // 미완성 근데 상관없음
 // 필요한 내용: 로딩 바 / 로딩 바에 얼마나 진행됬는지 %퍼센테이지 표현
 // 수정해야할 사항: %퍼센테이지 구현
 
 public class LoadingActivity extends AppCompatActivity {
     private ProgressBar progressBar;
+    private TextView progressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,7 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_progress);
 
         progressBar = findViewById(R.id.progressBar);                      // ProgressBar 객체 생성
-        progressBar.setIndeterminate(true);                                // progressbar를 비확정적 상태표시로 설정
-        progressBar.setProgress(0);                                        // progress 시작을 0으로 설정
-        progressBar.setMax(100);
+        progressText = findViewById(R.id.progressText);
 
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(ProgressWorker.class).build(); // WorkManager 작업 생성
         WorkManager.getInstance(this).enqueue(workRequest);                                     // WorkManager 작업 큐에 추가
@@ -48,6 +46,7 @@ public class LoadingActivity extends AppCompatActivity {
 
                                 // ProgressBar 업데이트
                                 progressBar.setProgress(progress);
+                                progressText.setText(progress + "%");
                             }
                             if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {                    // 완료되면 결과를 받음
                                 Data outputData = workInfo.getOutputData();                           // Data 객체가 받은 결과
@@ -57,6 +56,7 @@ public class LoadingActivity extends AppCompatActivity {
                                 int summer = outputData.getInt("summer", 0);
                                 int autumn = outputData.getInt("autumn", 0);
                                 int winter = outputData.getInt("winter", 0);
+
                                 // 결과 데이터를 다음 Activity에 전달
                                 Intent intent = new Intent(LoadingActivity.this, ResultActivity.class);
                                 intent.putExtra("name", name);

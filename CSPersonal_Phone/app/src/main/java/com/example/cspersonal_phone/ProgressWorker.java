@@ -20,7 +20,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,10 +33,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ProgressWorker extends Worker {
 
-    static RequestQueue requestQueue;        // volley 사용을 위한 rest api 요청을 담고 뱉을 요청 큐
-    String imageFilePath;                    // 사용할 이미지의 경로
-    // String base64Image;                   // 이미지를 base64인코딩 처리한 문자열 값
-    String jsonImage;
+    private static RequestQueue requestQueue;        // volley 사용을 위한 rest api 요청을 담고 뱉을 요청 큐
+    private String imageFilePath;                    // 사용할 이미지의 경로
+    private String jsonImage;
 
     static final String url = "http://220.69.209.126:5070/personalcolor";
 
@@ -62,23 +60,17 @@ public class ProgressWorker extends Worker {
     public Result doWork() {                                                            // 백그라운드 처리될 내용의 함수
         imageFilePath = CameraActivity.imageFilePath;                                   // 이미지 경로를 static 변수를 사용해 가져옴
         try {
+            setProgressAsync(new Data.Builder().putInt("PROGRESS", 10).build());        // 인코딩 10%로 progress 업데이트
+            Thread.sleep(1000);
+
             String base64Image = encodeImageToBase64();                                 // try-catch를 통해 base64를 통해 이미지 인코딩
             jsonImage = saveTojson(base64Image);
+            setProgressAsync(new Data.Builder().putInt("PROGRESS", 30).build());        // 인코딩 30%로 progress 업데이트
+            Thread.sleep(1500);
 
             handleResult();                                                             // handleResult() 로 서버로부터 응답 받음
-
-            // 응답 대기 중 진행률 업데이트
-            for (int i = 0; i <= 99; i++) {
-                Thread.sleep(100);  // 대기 시간 동안 진행률 증가
-                setProgressAsync(new Data.Builder().putInt("PROGRESS", i).build());
-            }
-
-            // 응답이 올 때까지 대기
-            while (name == null) {
-                Thread.sleep(100);
-            }
-            // 응답 완료 후 진행률 100% 업데이트
-            setProgressAsync(new Data.Builder().putInt("PROGRESS", 100).build());
+            setProgressAsync(new Data.Builder().putInt("PROGRESS", 50).build());        // 인코딩 50%로 progress 업데이트
+            Thread.sleep(1500);
 
             // 성공 결과 반환
             Data outputData = new Data.Builder()
@@ -89,20 +81,16 @@ public class ProgressWorker extends Worker {
                     .putInt("autumn", autumn)
                     .putInt("winter", winter)
                     .build();
+
+            // 응답 완료 후 진행률 100% 업데이트
+            setProgressAsync(new Data.Builder().putInt("PROGRESS", 100).build());
+            Thread.sleep(500);
+
             return Result.success(outputData);                                          // 비동기 progressworker가 success 되어 받음
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return Result.failure();
         }
-        /*for (int i = 0; i <= 100; i++) {                                               // 작업 로직: 0부터 100까지 Progress를 증가
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);                               // 100ms마다 진행률 증가
-                setProgressAsync(new Data.Builder().putInt("PROGRESS", i).build());    // setProgressAsync(): 진행 상태를 MainActivity에 전달
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                return Result.failure();
-            }
-        }*/
     }
 
     private String encodeImageToBase64() throws IOException {                        // base64를 사용한 이미지 인코딩 함수
@@ -121,7 +109,7 @@ public class ProgressWorker extends Worker {
     }
 
     private String saveTojson(String base64Image) {
-        Gson gson = new Gson(); ;                                                    // Gson 사용을 위한 객체 생성
+        Gson gson = new Gson();                                                      // Gson 사용을 위한 객체 생성
         String fileName = new File(imageFilePath).getName();                         // 이미지 파일로부터 이름 얻기
         BitmapFactory.Options options = new BitmapFactory.Options();                 // BitmapFactory를 사용하여 이미지의 가로와 세로를 얻기
         options.inJustDecodeBounds = true;                                           // 이미지를 실제로 로드하지 않고 크기만 얻음
@@ -161,7 +149,7 @@ public class ProgressWorker extends Worker {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("VolleyError", "Error: " + error.getMessage()); // 오류 처리
-                        Toast.makeText(getApplicationContext(), "Error: " +error.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(), "Error: " +error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <!-- http 웹 네트워크를 위한 권환 -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -21,8 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSPersonal_Phone"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">
-        <!--android:usesCleartextTraffic="true" // Http호출 허용의 설정-->
+        android:usesCleartextTraffic="true">  <!-- Http호출 허용의 설정 -->
+
 
         <activity
             android:name=".MainActivity"
@@ -51,6 +53,19 @@
             android:name=".ResultActivity"
             android:exported="true">
         </activity>
+
+        <!-- ColorMatchActivity 추가 -->
+        <activity
+            android:name=".ColorMatchActivity"
+            android:exported="true">
+        </activity>
+
+
+       <!-- <service
+            android:name=".ForegroundService"
+            android:foregroundServiceType="mediaProjection"
+            android:exported="false" />
+-->
 
         <!--  fileprovider 설정  -->
         <!--  ${applicationId} 패키지 이름  -->

@@ -1,71 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:background="@drawable/activity_colormatchactivity_background">
 
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
+        android:id="@+id/imageButton4"
+        android:layout_width="210dp"
+        android:layout_height="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/activity_colormatchactivity_backhomebutton" />
 
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+
+        <!--  왼쪽 버튼  -->
+        <ImageView
+            android:id="@+id/top_ImageView_left_button"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/activity_colormatchactivity_leftbutton"/>
+        <FrameLayout
+            android:layout_width="550dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center">
+            <!--  프레임  -->
+            <ImageView
+                android:id="@+id/top_ImageView_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/activity_colormatchactivity_frame"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="end"
+                android:paddingRight="70dp"
+                android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/top_recommend_color_button1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="6"/>
+                <Button
+                    android:id="@+id/top_recommend_color_button2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="3"/>
+                <Button
+                    android:id="@+id/top_recommend_color_button3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="0"/>
+            </LinearLayout>
+            <!--  상의 컴포넌트  -->
+            <ImageView
+                android:id="@+id/top_ImageView"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/default_top"/>
+        </FrameLayout>
+        <!--  오른쪽 버튼  -->
+        <ImageView
+            android:id="@+id/top_ImageView_right_button"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/activity_colormatchactivity_rightbutton"/>
+    </LinearLayout>
+    <!--  하의 프레임  -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+        <!--  왼쪽 버튼  -->
+        <ImageView
+            android:id="@+id/bottom_ImageView_left_button"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/activity_colormatchactivity_leftbutton"/>
+        <FrameLayout
+            android:layout_width="550dp"
+            android:layout_height="340dp"
+            android:layout_gravity="center">
+            <!--  프레임  -->
+            <ImageView
+                android:id="@+id/bottom_ImageView_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/activity_colormatchactivity_frame"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="end"
+                android:paddingRight="70dp"
+                android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/bottom_recommend_color_button1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="0"/>
+                <Button
+                    android:id="@+id/bottom_recommend_color_button2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="0"/>
+                <Button
+                    android:id="@+id/bottom_recommend_color_button3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:backgroundTint="#000000"
+                    android:contentDescription="2"/>
+            </LinearLayout>
+            <!--  하의 컴포넌트  -->
+            <ImageView
+                android:id="@+id/bottom_ImageView"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:top="20dp"
+                app:srcCompat="@drawable/default_bottom" />
+        </FrameLayout>
+        <!--  오른쪽 버튼  -->
+        <ImageView
+            android:id="@+id/bottom_ImageView_right_button"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/activity_colormatchactivity_rightbutton"/>
+    </LinearLayout>
+    <!--  저장 버튼  -->
     <ImageView
-        android:id="@+id/top_ImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-    <ImageView
-        android:id="@+id/bottom_ImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
-
-    <ImageButton
-        android:id="@+id/left_change_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
-
-    <ImageButton
-        android:id="@+id/right_change_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
-
-    <ImageButton
-        android:id="@+id/recommend_color_button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
-
-    <ImageButton
-        android:id="@+id/recommend_color_button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon"
-        android:layout_marginTop="16dp" />
-
-    <ImageButton
-        android:id="@+id/recommend_color_button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-    <ImageButton
         android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/activtiy_colormatchactivity_save" />
 
 </LinearLayout>
